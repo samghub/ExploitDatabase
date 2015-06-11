@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var jsonify = require('../');
+var files = process.argv.slice(2);
+var cwd = process.cwd();
+
+files.forEach(function(file){
+  jsonify.fromFile(
+    path.resolve(cwd, file), // src file
+    path.resolve(cwd, replaceAfterfix(file)) // dist file
+  )
+});
+
+function replaceAfterfix(str) {
+  if (str.indexOf('.') === -1)
+    return str + '.json';
+
+  return str.replace('.csv', '.json');
+}
